@@ -1,3 +1,10 @@
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  "@clerk/shared": true
+  esbuild: true
+  msw: true
+  sharp: false
+  unrs-resolver: false
+minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - "@clerk/nextjs"
+  - "@clerk/elements"
