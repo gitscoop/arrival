@@ -33,7 +33,7 @@ export function Footer({ maxWidth = "default" }: FooterProps) {
           built with taste by&nbsp;
           {[
             { href: "https://n14y.dev", label: "n14y.dev" },
-            { href: "https://github.com/your/repo", label: "oss" },
+            { href: "https://git.new/arrival/gs", label: "oss" },
           ].map(({ href, label }, i) => (
             <span key={href}>
               {i > 0 && (
