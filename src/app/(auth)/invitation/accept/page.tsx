@@ -3,7 +3,14 @@
 import { toast } from "sonner";
 import { useSignUp } from "@clerk/nextjs";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useReducer, useState, useTransition } from "react";
+
+import {
+  Suspense,
+  useEffect,
+  useReducer,
+  useState,
+  useTransition,
+} from "react";
 
 import { config } from "@/lib/config";
 import { isClerkAPIResponseError } from "@/lib/utils";
@@ -28,7 +35,7 @@ const OAUTH_ERROR_MESSAGES: Record<string, string> = {
 
 const CLERK_TICKET_PARAM = "__clerk_ticket";
 
-export default function InvitationAcceptPage() {
+function InvitationAcceptContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { signUp, isLoaded, setActive } = useSignUp();
@@ -226,5 +233,13 @@ export default function InvitationAcceptPage() {
       onSubmit={onSubmit}
       onSocialClick={handleSocialLogin}
     />
+  );
+}
+
+export default function InvitationAcceptPage() {
+  return (
+    <Suspense fallback={<InvitationLoading />}>
+      <InvitationAcceptContent />
+    </Suspense>
   );
 }
