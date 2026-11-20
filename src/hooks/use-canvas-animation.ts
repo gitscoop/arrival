@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useCallback,
-  type DependencyList,
-  type RefObject,
-} from "react";
+import { useEffect, useRef, useCallback, type RefObject } from "react";
 
 type UseCanvasAnimationOptions = {
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -22,12 +16,11 @@ type UseCanvasAnimationOptions = {
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
   ) => void;
-  initDeps?: DependencyList;
 };
 
 /*
   Canvas particle animation lifecycle:
-  - Runs `init` on mount, container resize, `initDeps` change, and `reducedMotion` toggle
+  - Runs `init` on mount, container resize, when `init` changes, and `reducedMotion` toggle
   - Normal mode: `requestAnimationFrame` loop calling `drawFrame`
   - Reduced motion: `drawStatic` after init and on resize; `repaint` on theme change — no rAF loop
 */
@@ -38,7 +31,6 @@ export function useCanvasAnimation({
   init,
   drawFrame,
   drawStatic,
-  initDeps = [],
 }: UseCanvasAnimationOptions): { repaint: () => void } {
   const rafRef = useRef<number>(0);
   const drawFrameRef = useRef(drawFrame);
@@ -54,7 +46,7 @@ export function useCanvasAnimation({
   }, [drawFrame, drawStatic]);
 
   /*
-    Runs `init` on mount and whenever `init`, `initDeps`, or `reducedMotion` change.
+    Runs `init` on mount and whenever `init` or `reducedMotion` change.
     `ResizeObserver` re-runs `init` on container resize and paints `drawStatic` in
     reduced motion so both render paths start from a valid canvas state.
   */
@@ -88,7 +80,7 @@ export function useCanvasAnimation({
 
     ro.observe(container);
     return () => ro.disconnect();
-  }, [init, reducedMotion, ...initDeps]);
+  }, [init, reducedMotion, canvasRef, containerRef]);
 
   /*
     rAF loop — only active in normal (non-reduced-motion) mode
@@ -116,7 +108,7 @@ export function useCanvasAnimation({
       stopped = true;
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, canvasRef]);
 
   const repaint = useCallback(() => {
     if (!reducedMotion) return;
