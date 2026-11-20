@@ -250,11 +250,11 @@ async function runCommand(command: string, args: string[]) {
         "pnpm.cmd",
         "exec",
         "tsx",
-        "--env-file=.env",
+        "--env-file=.env.local",
         scriptPath,
         ...args,
       ]
-    : ["exec", "tsx", "--env-file=.env", scriptPath, ...args];
+    : ["exec", "tsx", "--env-file=.env.local", scriptPath, ...args];
 
   return new Promise<void>((resolvePromise, reject) => {
     const child = spawn(runner, runnerArgs, {
