@@ -153,11 +153,11 @@ pnpm install
 Create a local environment file by copying the example:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
 > [!IMPORTANT]
-> Open the newly created `.env` file and populate it with your specific service values. The file groups variables by service for convenience. Never commit your `.env` file.
+> Open the newly created `.env.local` file and populate it with your specific service values. The file groups variables by service for convenience. Never commit your `.env.local` file.
 
 ### 4. Local URL and Ngrok Setup
 
@@ -165,7 +165,7 @@ Portless serves the local app at `https://gitscoop.localhost`. Ngrok provides th
 
 1. [Install ngrok](https://ngrok.com/docs) and sign in.
 2. Grab your free dev domain from the [ngrok dashboard](https://dashboard.ngrok.com) (e.g. `your-subdomain.ngrok-free.app`).
-3. Set `NEXT_PUBLIC_APP_URL` in `.env` to that full origin, including `https://`.
+3. Set `NEXT_PUBLIC_APP_URL` in `.env.local` to that full origin, including `https://`.
 4. Portless runs the Next.js dev server on port `3000` so ngrok can target it reliably.
 5. Start the stable public tunnel in a separate terminal:
 
@@ -178,22 +178,22 @@ Portless serves the local app at `https://gitscoop.localhost`. Ngrok provides th
 **Clerk**
 
 - **Waitlist Mode**: In the dashboard, navigate to **Waitlist** → toggle on **Enable waitlist**.
-- **Webhooks**: Go to **Webhooks** → **Add Endpoint**. URL: `https://your-subdomain.ngrok-free.app/api/webhooks/clerk`. Subscribe to `email.created`, `waitlistEntry.created`, `waitlistEntry.updated`. Copy the **Signing Secret** to `CLERK_WEBHOOK_SECRET` in `.env`.
+- **Webhooks**: Go to **Webhooks** → **Add Endpoint**. URL: `https://your-subdomain.ngrok-free.app/api/webhooks/clerk`. Subscribe to `email.created`, `waitlistEntry.created`, `waitlistEntry.updated`. Copy the **Signing Secret** to `CLERK_WEBHOOK_SECRET` in `.env.local`.
 - **Disable Default Delivery**: Under **Customization** → **Emails**, toggle off **Delivered by Clerk** for `verification_code`, `reset_password_code`, and `password_changed`, because Gitscoop intercepts them.
 - **Account Portal**: Navigate to **Account Portal** and click **Disable Account Portal** to ensure all auth routes through custom Clerk Elements.
-- **Keys**: Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` in `.env`.
+- **Keys**: Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` in `.env.local`.
 
 **Resend**
 
 - Add a sending domain (e.g., `ops.yourdomain.com`) and verify your DNS records.
-- Create a specific segment/audience for waitlist users. Set `RESEND_SEGMENT_ID` in `.env`.
-- Create your templates: Waitlist confirmation, Waitlist invitation, Verification code, Password reset code, and Password changed. Set their respective `RESEND_*_TEMPLATE_ID`s in `.env`.
+- Create a specific segment/audience for waitlist users. Set `RESEND_SEGMENT_ID` in `.env.local`.
+- Create your templates: Waitlist confirmation, Waitlist invitation, Verification code, Password reset code, and Password changed. Set their respective `RESEND_*_TEMPLATE_ID`s in `.env.local`.
 - Copy your API key to `RESEND_API_KEY`.
 
 **Upstash**
 
 - **Redis**: Create a Redis database. Add `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`.
-- **QStash**: Navigate to the QStash tab. Copy `QSTASH_TOKEN`, `QSTASH_CURRENT_SIGNING_KEY`, and `QSTASH_NEXT_SIGNING_KEY` into your `.env`.
+- **QStash**: Navigate to the QStash tab. Copy `QSTASH_TOKEN`, `QSTASH_CURRENT_SIGNING_KEY`, and `QSTASH_NEXT_SIGNING_KEY` into your `.env.local`.
 
 **Kickbox**
 
