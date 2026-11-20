@@ -176,7 +176,7 @@ export function ParticleBackground(props: ParticleBackgroundProps) {
 
   /*
     Sets canvas dimensions for the current DPR and regenerates the particle set.
-    Called on mount, on resize, when `initDeps` change, and when reduced-motion toggles.
+    Called on mount, on resize, when layout inputs change, and when reduced-motion toggles.
   */
   const init = useCallback(() => {
     const canvas = canvasRef.current;
@@ -238,7 +238,7 @@ export function ParticleBackground(props: ParticleBackgroundProps) {
     }
 
     particlesRef.current = particles;
-  }, []);
+  }, [asciiChars, gap, mode, speedMax, speedMin]);
 
   /*
     Draws one animated frame on each rAF tick (normal mode only).
@@ -397,7 +397,6 @@ export function ParticleBackground(props: ParticleBackgroundProps) {
     init,
     drawFrame,
     drawStatic,
-    initDeps: [gap, mode, asciiChars, speedMin, speedMax],
   });
 
   /*
