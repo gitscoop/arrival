@@ -18,10 +18,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "analyze": "ANALYZE=true next build",
-    "redis": "pnpm exec tsx --env-file=.env scripts/redis/index.ts",
-    "redis:clear:ratelimit": "pnpm exec tsx --env-file=.env scripts/redis/clear-ratelimit.ts",
-    "redis:clear:emails": "pnpm exec tsx --env-file=.env scripts/redis/clear-emails.ts",
-    "redis:flush": "pnpm exec tsx --env-file=.env scripts/redis/flush-all.ts"
+    "redis": "pnpm exec tsx --env-file=.env.local scripts/redis/index.ts",
+    "redis:clear:ratelimit": "pnpm exec tsx --env-file=.env.local scripts/redis/clear-ratelimit.ts",
+    "redis:clear:emails": "pnpm exec tsx --env-file=.env.local scripts/redis/clear-emails.ts",
+    "redis:flush": "pnpm exec tsx --env-file=.env.local scripts/redis/flush-all.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
