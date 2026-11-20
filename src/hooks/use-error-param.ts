@@ -25,5 +25,5 @@ export function useErrorParam(errorMessages: Record<string, string>): void {
       url.searchParams.delete("error");
       router.replace(url.pathname + url.search, { scroll: false });
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, errorMessages]);
 }
