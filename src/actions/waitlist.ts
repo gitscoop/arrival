@@ -14,7 +14,7 @@ import { waitlistRatelimiter, globalRatelimiter } from "@/lib/ratelimit";
 interface WaitlistState {
   success: boolean;
   message: string;
-  reason?: "RATE_LIMIT" | "SERVICE_ERROR";
+  reason?: "RATE_LIMIT" | "SERVICE_ERROR" | "UNVERIFIED";
 }
 
 function resendAudienceSyncError(): WaitlistState {
@@ -301,6 +301,15 @@ export async function joinWaitlist(
       !validationResult.isTypo &&
       !validationResult.isInvalid;
 
+    if (result === "unknown") {
+      return {
+        success: false,
+        message:
+          "Couldn't verify the email right now. Please try again or use another address.",
+        reason: "UNVERIFIED",
+      };
+    }
+
     /* 
       11. Upstash Redis - Cache validation outcome by category
     */
@@ -312,7 +321,7 @@ export async function joinWaitlist(
       });
     } else if (validationResult.isInvalid) {
       await redis.sadd(`waitlist:emails:invalid`, email);
-    } else if (result !== "unknown") {
+    } else if (validationResult.isBlocked) {
       await redis.sadd(`waitlist:emails:blocked`, email);
     }
   }
