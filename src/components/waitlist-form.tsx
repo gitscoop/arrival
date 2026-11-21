@@ -146,7 +146,10 @@ export function WaitlistForm() {
     } else {
       if (result.reason === "RATE_LIMIT") {
         toast.error(result.message);
-      } else if (result.reason === "SERVICE_ERROR") {
+      } else if (
+        result.reason === "SERVICE_ERROR" ||
+        result.reason === "UNVERIFIED"
+      ) {
         toast.warning(result.message);
       } else {
         form.setError("email", { message: result.message });
