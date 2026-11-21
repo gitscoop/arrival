@@ -20,7 +20,7 @@ export interface KickboxResponse {
   domain: string;
 }
 
-const KICKBOX_TIMEOUT_MS = 30_000;
+const KICKBOX_TIMEOUT_MS = 9_000;
 const FETCH_TIMEOUT_MS = KICKBOX_TIMEOUT_MS + 3_000;
 
 export async function verifyEmail(
